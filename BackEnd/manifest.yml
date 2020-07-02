@@ -1,0 +1,5 @@
+---
+applications:
+ - name: Flask-Router
+   random-route: true
+   memory: 128M
