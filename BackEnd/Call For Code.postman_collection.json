@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "0a0e2d52-584e-49a3-80b4-0f175af6ec65",
+		"_postman_id": "786b2210-b2c2-4c52-9b65-55215b5d2123",
 		"name": "Call For Code",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -62,7 +62,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"name\" : \"Rajat Godi\",\n\t\"emailAddress\" : \"r@g.co\"\n}",
+					"raw": "{\n\t\"type\":\"worker\",\n\t\"name\" : \"Rajat Godi\",\n\t\"emailAddress\" : \"r@g.co\",\n\t\"address\":\"Persistent Systems Goa\",\n\t\"pnumber\":\"99992834634\",\n\t\"qualification\":\"High School\",\n\t\"isVolunteer\":\"false\",\n\t\"dob\":\"epoch\",\n\t\"aadhaar\":\"99999999934399\"\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -81,6 +81,174 @@
 						"v1.0",
 						"users"
 					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Post Manufacturer",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"type\":\"manufacturer\",\n\t\"name\" : \"Rajat Godi\",\n\t\"emailAddress\" : \"r@g.co\",\n\t\"address\":\"Persistent Systems Goa\",\n\t\"pnumber\":\"99992834634\",\n\t\"llpin\":\"83434839503\",\n\t\"scale\":\"small\",\n\t\"gstin\":\"99999999934399\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8000/api/v1.0/users",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"v1.0",
+						"users"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Post Buyer",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"type\":\"buyer\",\n\t\"name\" : \"Rajat Godi\",\n\t\"emailAddress\" : \"r@g.co\",\n\t\"address\":\"Persistent Systems Goa\",\n\t\"pnumber\":\"99992834634\",\n\t\"entityType\":\"Individual\",\n\t\"aadhaar\":\"565657585995\",\n\t\"gstin\":\"347348343\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8000/api/v1.0/users",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"v1.0",
+						"users"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Post Jobs",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"title\":\"Mask Maker\",\n    \"description\":\"Cut cloth and stitch mask\",\n    \"location\":\"Goa\",\n    \"manufacturerId\":\"346787\",  \n\t\"image\":\"3945y2342895745344535\",\n    \"applicants\":[\"00001\",\"00982\"]\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8000/api/v1.0/jobs",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"v1.0",
+						"jobs"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Jobs",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8000/api/v1.0/jobs?manufacturer=584549",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"v1.0",
+						"jobs"
+					],
+					"query": [
+						{
+							"key": "manufacturer",
+							"value": "584549"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Apply for Job",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": ""
 				}
 			},
 			"response": []
