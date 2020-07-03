@@ -127,5 +127,16 @@ def apply_for_job(worker_id, job_id):
         updated_doc.save()
     return Response(status = 200)
 
+@app.route('/v1.0/delete/<type>', methods=['POST'])
+def delete_all(type):
+    if type == "users":
+        db = client[userDatabaseName]
+    if type == "jobs":
+        db = client[jobDatabaseName]
+    result = []
+    for doc in db:
+        doc.delete()
+    return Response(status = 200)
+
 if __name__=='__main__':
     app.run(host='0.0.0.0', port=port)
