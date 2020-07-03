@@ -6,21 +6,60 @@
 	},
 	"item": [
 		{
-			"name": "Get All Users",
+			"name": "Get Users",
 			"request": {
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:8000/api/v1.0/users",
+					"raw": "http://localhost:8000/v1.0/users?type=worker&email=r%40g.com",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
 					"port": "8000",
 					"path": [
-						"api",
 						"v1.0",
 						"users"
+					],
+					"query": [
+						{
+							"key": "type",
+							"value": "worker"
+						},
+						{
+							"key": "email",
+							"value": "r%40g.com"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Manufacturer",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8000/v1.0/users?type=manufacturer&email=r%40g.com",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"v1.0",
+						"users"
+					],
+					"query": [
+						{
+							"key": "type",
+							"value": "manufacturer"
+						},
+						{
+							"key": "email",
+							"value": "r%40g.com"
+						}
 					]
 				}
 			},
@@ -32,14 +71,13 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:8000/api/v1.0/users/184190266e46c575ab258d9307b77b85",
+					"raw": "http://localhost:8000/v1.0/users/184190266e46c575ab258d9307b77b85",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
 					"port": "8000",
 					"path": [
-						"api",
 						"v1.0",
 						"users",
 						"184190266e46c575ab258d9307b77b85"
@@ -62,7 +100,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"type\":\"worker\",\n\t\"name\" : \"Rajat Godi\",\n\t\"emailAddress\" : \"r@g.co\",\n\t\"address\":\"Persistent Systems Goa\",\n\t\"pnumber\":\"99992834634\",\n\t\"qualification\":\"High School\",\n\t\"isVolunteer\":\"false\",\n\t\"dob\":\"epoch\",\n\t\"aadhaar\":\"99999999934399\"\n}",
+					"raw": "{\n\t\"type\":\"worker\",\n\t\"name\" : \"LC\",\n\t\"emailAddress\" : \"r@g.co\",\n\t\"address\":\"Persistent Systems Goa\",\n\t\"pnumber\":\"99992834634\",\n\t\"qualification\":\"High School\",\n\t\"isVolunteer\":\"false\",\n\t\"dob\":\"epoch\",\n\t\"aadhaar\":\"99999999934399\"\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -70,14 +108,13 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:8000/api/v1.0/users",
+					"raw": "http://localhost:8000/v1.0/users",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
 					"port": "8000",
 					"path": [
-						"api",
 						"v1.0",
 						"users"
 					]
@@ -99,7 +136,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"type\":\"manufacturer\",\n\t\"name\" : \"Rajat Godi\",\n\t\"emailAddress\" : \"r@g.co\",\n\t\"address\":\"Persistent Systems Goa\",\n\t\"pnumber\":\"99992834634\",\n\t\"llpin\":\"83434839503\",\n\t\"scale\":\"small\",\n\t\"gstin\":\"99999999934399\"\n}",
+					"raw": "{\n\t\"type\":\"manufacturer\",\n\t\"name\" : \"Rajat Godi\",\n\t\"emailAddress\" : \"r@g.com\",\n\t\"address\":\"Persistent Systems Goa\",\n\t\"pnumber\":\"99992834634\",\n\t\"llpin\":\"83434839503\",\n\t\"scale\":\"small\",\n\t\"gstin\":\"99999999934399\"\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -107,14 +144,13 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:8000/api/v1.0/users",
+					"raw": "http://localhost:8000/v1.0/users",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
 					"port": "8000",
 					"path": [
-						"api",
 						"v1.0",
 						"users"
 					]
@@ -144,14 +180,13 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:8000/api/v1.0/users",
+					"raw": "http://localhost:8000/v1.0/users",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
 					"port": "8000",
 					"path": [
-						"api",
 						"v1.0",
 						"users"
 					]
@@ -173,7 +208,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"title\":\"Mask Maker\",\n    \"description\":\"Cut cloth and stitch mask\",\n    \"location\":\"Goa\",\n    \"manufacturerId\":\"346787\",  \n\t\"image\":\"3945y2342895745344535\",\n    \"applicants\":[\"00001\",\"00982\"]\n}",
+					"raw": "{\n    \"title\":\"Mask Maker Goa\",\n    \"description\":\"Cut cloth and stitch mask\",\n    \"location\":\"Mumbai\",\n    \"manufacturerId\":\"346777\",  \n\t\"image\":\"3945y2342895745344535\",\n    \"applicants\":[\"00001\",\"00982\"]\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -181,14 +216,13 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:8000/api/v1.0/jobs",
+					"raw": "http://localhost:8000/v1.0/jobs",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
 					"port": "8000",
 					"path": [
-						"api",
 						"v1.0",
 						"jobs"
 					]
@@ -221,21 +255,24 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:8000/api/v1.0/jobs?manufacturer=584549",
+					"raw": "http://localhost:8000/v1.0/jobs?manufacturer=346777&location=Mumbai",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
 					"port": "8000",
 					"path": [
-						"api",
 						"v1.0",
 						"jobs"
 					],
 					"query": [
 						{
 							"key": "manufacturer",
-							"value": "584549"
+							"value": "346777"
+						},
+						{
+							"key": "location",
+							"value": "Mumbai"
 						}
 					]
 				}
