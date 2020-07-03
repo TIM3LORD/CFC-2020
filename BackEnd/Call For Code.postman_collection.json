@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "786b2210-b2c2-4c52-9b65-55215b5d2123",
+		"_postman_id": "ff9a4c5a-8193-4e98-bfb9-fccb0e9b897f",
 		"name": "Call For Code",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -11,12 +11,11 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:8000/v1.0/users?type=worker&email=r%40g.com",
+					"raw": "http://{{url}}/v1.0/users?type=worker",
 					"protocol": "http",
 					"host": [
-						"localhost"
+						"{{url}}"
 					],
-					"port": "8000",
 					"path": [
 						"v1.0",
 						"users"
@@ -25,10 +24,6 @@
 						{
 							"key": "type",
 							"value": "worker"
-						},
-						{
-							"key": "email",
-							"value": "r%40g.com"
 						}
 					]
 				}
@@ -41,12 +36,11 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:8000/v1.0/users?type=manufacturer&email=r%40g.com",
+					"raw": "http://{{url}}/v1.0/users?type=manufacturer&email=manufacturertest1%40worker.com",
 					"protocol": "http",
 					"host": [
-						"localhost"
+						"{{url}}"
 					],
-					"port": "8000",
 					"path": [
 						"v1.0",
 						"users"
@@ -58,7 +52,7 @@
 						},
 						{
 							"key": "email",
-							"value": "r%40g.com"
+							"value": "manufacturertest1%40worker.com"
 						}
 					]
 				}
@@ -71,16 +65,15 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:8000/v1.0/users/184190266e46c575ab258d9307b77b85",
+					"raw": "http://{{url}}/v1.0/users/d58484c08815e32d281135288a66d3a5",
 					"protocol": "http",
 					"host": [
-						"localhost"
+						"{{url}}"
 					],
-					"port": "8000",
 					"path": [
 						"v1.0",
 						"users",
-						"184190266e46c575ab258d9307b77b85"
+						"d58484c08815e32d281135288a66d3a5"
 					]
 				}
 			},
@@ -108,12 +101,11 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:8000/v1.0/users",
+					"raw": "http://{{url}}/v1.0/users",
 					"protocol": "http",
 					"host": [
-						"localhost"
+						"{{url}}"
 					],
-					"port": "8000",
 					"path": [
 						"v1.0",
 						"users"
@@ -144,12 +136,11 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:8000/v1.0/users",
+					"raw": "http://{{url}}/v1.0/users",
 					"protocol": "http",
 					"host": [
-						"localhost"
+						"{{url}}"
 					],
-					"port": "8000",
 					"path": [
 						"v1.0",
 						"users"
@@ -180,12 +171,11 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:8000/v1.0/users",
+					"raw": "http://{{url}}/v1.0/users",
 					"protocol": "http",
 					"host": [
-						"localhost"
+						"{{url}}"
 					],
-					"port": "8000",
 					"path": [
 						"v1.0",
 						"users"
@@ -208,7 +198,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"title\":\"Test Job for application\",\n    \"description\":\"Test to add applicants to job\",\n    \"location\":\"Delhi\",\n    \"manufacturerId\":\"346755\",  \n\t\"image\":\"3945y2342895745344535\",\n    \"applicants\":[]\n}",
+					"raw": "{\n    \"title\":\"Test Job for application 4\",\n    \"description\":\"Test to add applicants to job\",\n    \"location\":\"Delhi\",\n    \"manufacturerId\":\"d58484c08815e32d281135288a66e190\",  \n\t\"image\":\"3945y2342895745344535\",\n    \"applicants\":[]\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -216,12 +206,11 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:8000/v1.0/jobs",
+					"raw": "http://{{url}}/v1.0/jobs",
 					"protocol": "http",
 					"host": [
-						"localhost"
+						"{{url}}"
 					],
-					"port": "8000",
 					"path": [
 						"v1.0",
 						"jobs"
@@ -255,16 +244,15 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:8000/v1.0/jobs/d58484c08815e32d281135288a4beff6",
+					"raw": "http://{{url}}/v1.0/jobs/1f08ed4d78e3a621ad37a7c00b226f54",
 					"protocol": "http",
 					"host": [
-						"localhost"
+						"{{url}}"
 					],
-					"port": "8000",
 					"path": [
 						"v1.0",
 						"jobs",
-						"d58484c08815e32d281135288a4beff6"
+						"1f08ed4d78e3a621ad37a7c00b226f54"
 					]
 				}
 			},
@@ -295,12 +283,11 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:8000/v1.0/jobs?manufacturer=346777&location=Mumbai",
+					"raw": "http://{{url}}/v1.0/jobs?manufacturer=d447ccd97f241af720e79c94826ebcac",
 					"protocol": "http",
 					"host": [
-						"localhost"
+						"{{url}}"
 					],
-					"port": "8000",
 					"path": [
 						"v1.0",
 						"jobs"
@@ -308,11 +295,7 @@
 					"query": [
 						{
 							"key": "manufacturer",
-							"value": "346777"
-						},
-						{
-							"key": "location",
-							"value": "Mumbai"
+							"value": "d447ccd97f241af720e79c94826ebcac"
 						}
 					]
 				},
@@ -326,21 +309,49 @@
 				"method": "POST",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:8000/v1.0/jobs/apply/d58484c08815e32d281135288a58fa4e/d58484c08815e32d281135288a4beff6",
+					"raw": "http://{{url}}/v1.0/jobs/apply/d58484c08815e32d281135288a66d3a5/1f08ed4d78e3a621ad37a7c00b226f54",
 					"protocol": "http",
 					"host": [
-						"localhost"
+						"{{url}}"
 					],
-					"port": "8000",
 					"path": [
 						"v1.0",
 						"jobs",
 						"apply",
-						"d58484c08815e32d281135288a58fa4e",
-						"d58484c08815e32d281135288a4beff6"
+						"d58484c08815e32d281135288a66d3a5",
+						"1f08ed4d78e3a621ad37a7c00b226f54"
 					]
 				},
 				"description": "/v1.0/jobs/apply/workerid/jobid"
+			},
+			"response": []
+		},
+		{
+			"name": "Delete all users/jobs",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"type\":\"worker\",\r\n    \"name\":\"test name\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://{{url}}/v1.0/delete/jobs",
+					"protocol": "http",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"v1.0",
+						"delete",
+						"jobs"
+					]
+				}
 			},
 			"response": []
 		}
