@@ -1,6 +1,7 @@
 from cloudant.client import Cloudant
 from cloudant.error import CloudantException
 from cloudant.result import Result, ResultByKey
+from cloudant.document import Document
 from flask import Flask, request, jsonify, Response, abort
 import os
 import json
@@ -42,10 +43,12 @@ def post_user():
 @app.route('/v1.0/users/<id>', methods=['GET'])
 def get_user_by_id(id):
     db = client[userDatabaseName]
-    if id and id in db:
-        return jsonify(db[id])
-    else:
-        return Response(status = 404)
+    selector = {'_id': {'$eq': id}}
+    docs = db.get_query_result(selector)
+    result = []
+    for doc in docs:
+        result.append(doc)
+    return jsonify(result)
 
 @app.route('/v1.0/users', methods=['GET'])
 def get_query_users():
@@ -77,16 +80,18 @@ def post_job():
     if not request.json:
         abort(400)
     document = db.create_document(request.json)
-    document.save()
+    # document.save()
     return jsonify(document)
 
 @app.route('/v1.0/jobs/<id>', methods=['GET'])
 def get_job_by_id(id):
     db = client[jobDatabaseName]
-    if id and id in db:
-        return jsonify(db[id])
-    else:
-        return Response(status = 404)
+    selector = {'_id': {'$eq': id}}
+    docs = db.get_query_result(selector)
+    result = []
+    for doc in docs:
+        result.append(doc)
+    return jsonify(result)
 
 @app.route('/v1.0/jobs', methods=['GET'])
 def get_query_jobs():
@@ -109,6 +114,18 @@ def get_query_jobs():
         for doc in docs:
             result.append(doc)
         return jsonify(result)
+
+@app.route('/v1.0/jobs/apply/<worker_id>/<job_id>', methods=['POST'])
+def apply_for_job(worker_id, job_id):
+    db = client[jobDatabaseName]
+    selector = {'_id': {'$eq': job_id}}
+    docs = db.get_query_result(selector)
+    for doc in docs:
+        updated_doc = Document(db, doc['_id'])
+        updated_doc.update(doc)
+        updated_doc['applicants'].append(worker_id)
+        updated_doc.save()
+    return Response(status = 200)
 
 if __name__=='__main__':
     app.run(host='0.0.0.0', port=port)

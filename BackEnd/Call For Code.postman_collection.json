@@ -6,7 +6,7 @@
 	},
 	"item": [
 		{
-			"name": "Get Users",
+			"name": "Get Users by Query",
 			"request": {
 				"method": "GET",
 				"header": [],
@@ -100,7 +100,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"type\":\"worker\",\n\t\"name\" : \"LC\",\n\t\"emailAddress\" : \"r@g.co\",\n\t\"address\":\"Persistent Systems Goa\",\n\t\"pnumber\":\"99992834634\",\n\t\"qualification\":\"High School\",\n\t\"isVolunteer\":\"false\",\n\t\"dob\":\"epoch\",\n\t\"aadhaar\":\"99999999934399\"\n}",
+					"raw": "{\n\t\"type\":\"worker\",\n\t\"name\" : \"Test Worker 4\",\n\t\"emailAddress\" : \"test4@worker.com\",\n\t\"address\":\"Persistent Systems Goa\",\n\t\"pnumber\":\"99992834634\",\n\t\"qualification\":\"High School\",\n\t\"isVolunteer\":\"false\",\n\t\"dob\":\"epoch\",\n\t\"aadhaar\":\"99999999934399\"\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -208,7 +208,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"title\":\"Mask Maker Goa\",\n    \"description\":\"Cut cloth and stitch mask\",\n    \"location\":\"Mumbai\",\n    \"manufacturerId\":\"346777\",  \n\t\"image\":\"3945y2342895745344535\",\n    \"applicants\":[\"00001\",\"00982\"]\n}",
+					"raw": "{\n    \"title\":\"Test Job for application\",\n    \"description\":\"Test to add applicants to job\",\n    \"location\":\"Delhi\",\n    \"manufacturerId\":\"346755\",  \n\t\"image\":\"3945y2342895745344535\",\n    \"applicants\":[]\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -231,7 +231,47 @@
 			"response": []
 		},
 		{
-			"name": "Get Jobs",
+			"name": "Get Jobs by id",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8000/v1.0/jobs/d58484c08815e32d281135288a4beff6",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"v1.0",
+						"jobs",
+						"d58484c08815e32d281135288a4beff6"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Jobs Query",
 			"protocolProfileBehavior": {
 				"disableBodyPruning": true
 			},
@@ -275,7 +315,8 @@
 							"value": "Mumbai"
 						}
 					]
-				}
+				},
+				"description": "/v1.0/jobs?manufacturer=manufacturer_id&location=location_state"
 			},
 			"response": []
 		},
@@ -285,8 +326,21 @@
 				"method": "POST",
 				"header": [],
 				"url": {
-					"raw": ""
-				}
+					"raw": "http://localhost:8000/v1.0/jobs/apply/d58484c08815e32d281135288a58fa4e/d58484c08815e32d281135288a4beff6",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"v1.0",
+						"jobs",
+						"apply",
+						"d58484c08815e32d281135288a58fa4e",
+						"d58484c08815e32d281135288a4beff6"
+					]
+				},
+				"description": "/v1.0/jobs/apply/workerid/jobid"
 			},
 			"response": []
 		}
