@@ -62,7 +62,7 @@ def get_query_users():
         selector = {}
         if(type is not None and type != ""):
             selector['type'] = {'$eq': type}
-        elif(email is not None and email != ""):
+        if(email is not None and email != ""):
             selector['emailAddress'] = {'$eq': email}
         docs = db.get_query_result(selector)
         result = []
