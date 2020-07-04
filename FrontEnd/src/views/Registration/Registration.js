@@ -91,7 +91,86 @@ export default function Registration() {
                     tabName: "Manufacturer",
                     tabIcon: BuildIcon,
                     tabContent: (
-                        <div>Hello</div>
+                        <div>
+                        <GridContainer>
+                                <GridItem xs={12} sm={12} md={12}>
+                                    <CustomInput
+                                        labelText="Name"
+                                        id="Manufacturer-name"
+                                        formControlProps={{
+                                            fullWidth: true
+                                        }}
+                                    />
+                                </GridItem>
+                            </GridContainer>
+                            <GridContainer>
+                                <GridItem xs={12} sm={12} md={4}>
+                                    <CustomInput
+                                        labelText="Email address"
+                                        id="Manufacturer-email"
+                                        inputProps={{
+                                            type: "email"
+                                        }}
+                                        formControlProps={{
+                                            fullWidth: true
+                                        }}
+                                    />
+                                </GridItem>
+                                <GridItem xs={12} sm={12} md={4}>
+                                    <CustomInput
+                                        labelText="Phone Number"
+                                        id="Manufacturer-phone"
+                                        inputProps={{
+                                            type: "tel"
+                                        }}
+                                        formControlProps={{
+                                            fullWidth: true
+                                        }}
+                                    />
+                                </GridItem>
+                                <GridItem xs={12} sm={12} md={4}>
+                                    <CustomInput
+                                        labelText="Quantities of PPE Kit"
+                                        id="PPE KIT"
+                                        inputProps={{
+                                            type: "number"
+                                        }}
+                                        formControlProps={{
+                                            fullWidth: true
+                                        }}
+                                    />
+                                </GridItem>
+                                <GridItem xs={12} sm={12} md={12}>
+                                    <CustomInput
+                                        labelText="Production Method"
+                                        id="Method"
+                                        inputProps={{
+                                            type: "text"
+                                        }}
+                                        formControlProps={{
+                                            fullWidth: true
+                                        }}
+                                    />
+                                </GridItem>
+                                <GridItem xs={12} sm={12} md={4}>
+                                    <CustomInput
+                                        labelText="CIN/GLN/FCRN/LLPIN/FLLPIN"
+                                        id="Manufacturer ID"
+                                        inputProps={{
+                                            type: "text"
+                                        }}
+                                        formControlProps={{
+                                            fullWidth: true
+                                        }}
+                                    />
+                                </GridItem>
+                            </GridContainer>
+                            <GridContainer>
+                                <GridItem xs={12} sm={12} md={3}>
+                                    <Button color="primary">Register</Button>
+                                </GridItem>
+                            </GridContainer>
+                        </div>
                     )
                 },
                 {
