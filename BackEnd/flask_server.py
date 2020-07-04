@@ -5,12 +5,15 @@ from cloudant.document import Document
 from flask import Flask, request, jsonify, Response, abort
 import os
 import json
+import requests
 
 #when running on IBM CLOUD
 if "CLOUDANT_URL" in os.environ:
     user = os.environ['CLOUDANT_USERNAME']
     password = os.environ['CLOUDANT_PASSWORD']
-    url = url=os.environ['CLOUDANT_URL']
+    url = os.environ['CLOUDANT_URL']
+    geo_code_url = os.environ['HERE_GEO_CODE_URL']
+    here_api_key = os.environ['HERE_API_KEY']
 
 #When running locally
 elif os.path.isfile('vcap-local.json'):
@@ -21,8 +24,10 @@ elif os.path.isfile('vcap-local.json'):
         user = creds['username']
         password = creds['password']
         url = creds['host']
+        here_api_key = creds['hereApiKey']
+        geo_code_url = creds['geoCodeUrl']
 
-userDatabaseName = "databasedemo"
+userDatabaseName = "userdb"
 jobDatabaseName = "jobsdb"
 port = int(os.getenv('PORT', 8000))
 client = None
@@ -37,7 +42,14 @@ def post_user():
     db = client[userDatabaseName]
     if not request.json:
         abort(400)
+    if request.json['address']:
+        params = { 'q' : request.json['address'], 'apiKey' : here_api_key}
+        r = requests.get(url=geo_code_url, params=params)
+        if len(r.json()['items']) > 0:
+            request.json['latitude'] = r.json()['items'][0]['position']['lat']
+            request.json['longitude'] = r.json()['items'][0]['position']['lng']
     document = db.create_document(request.json)
+    document.save()
     return jsonify(document)
 
 @app.route('/v1.0/users/<id>', methods=['GET'])
@@ -137,6 +149,18 @@ def delete_all(type):
     for doc in db:
         doc.delete()
     return Response(status = 200)
+
+@app.route('/v1.0/login', methods=['POST'])
+def user_login():
+    db = client[userDatabaseName]
+    if not request.json:
+        abort(400)
+    selector = {'emailAddress': {'$eq': request.json['emailAddress']}}
+    docs = db.get_query_result(selector)
+    for doc in docs:
+        if doc['password'] == request.json['password']:
+            return jsonify(doc)
+    return Response(status = 400)
 
 if __name__=='__main__':
     app.run(host='0.0.0.0', port=port)

@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "ff9a4c5a-8193-4e98-bfb9-fccb0e9b897f",
+		"_postman_id": "5f8dada2-5db9-4387-9faf-05f05216bc4d",
 		"name": "Call For Code",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -93,7 +93,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"type\":\"worker\",\n\t\"name\" : \"Test Worker 4\",\n\t\"emailAddress\" : \"test4@worker.com\",\n\t\"address\":\"Persistent Systems Goa\",\n\t\"pnumber\":\"99992834634\",\n\t\"qualification\":\"High School\",\n\t\"isVolunteer\":\"false\",\n\t\"dob\":\"epoch\",\n\t\"aadhaar\":\"99999999934399\"\n}",
+					"raw": "{\n\t\"type\":\"worker\",\n\t\"name\" : \"Test Worker 4\",\n\t\"emailAddress\" : \"test4@worker.com\",\n\t\"address\":\"Ravindra Bhavan Fatorda\",\n\t\"pnumber\":\"99992834634\",\n\t\"qualification\":\"High School\",\n\t\"isVolunteer\":\"false\",\n\t\"dob\":\"epoch\",\n\t\"aadhaar\":\"99999999934399\",\n\t\"password\":\"12345abc\"\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -350,6 +350,35 @@
 						"v1.0",
 						"delete",
 						"jobs"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Login",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"emailAddress\" : \"test4@worker.com\",\n\t\"password\" : \"12345abc\"\n}"
+				},
+				"url": {
+					"raw": "http://{{url}}/v1.0/login",
+					"protocol": "http",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"v1.0",
+						"login"
 					]
 				}
 			},
