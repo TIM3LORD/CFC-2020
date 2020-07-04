@@ -3,6 +3,7 @@ from cloudant.error import CloudantException
 from cloudant.result import Result, ResultByKey
 from cloudant.document import Document
 from flask import Flask, request, jsonify, Response, abort
+from flask_cors import CORS, cross_origin
 import os
 import json
 import requests
@@ -29,14 +30,16 @@ elif os.path.isfile('vcap-local.json'):
 
 userDatabaseName = "userdb"
 jobDatabaseName = "jobsdb"
+productDatabaseName = "proddb"
 port = int(os.getenv('PORT', 8000))
 client = None
 db = None
 app = Flask(__name__)
+CORS(app)
 
 client = Cloudant(user, password, url=url)
 client.connect()
-
+client.create_database(productDatabaseName)
 @app.route('/v1.0/users', methods=['POST'])
 def post_user():
     db = client[userDatabaseName]
@@ -112,9 +115,16 @@ def get_query_jobs():
     location = request.args.get('location')
     if manufacturer ==  "all":
         result = []
-        for doc in db:
-            result.append(doc)
-        return jsonify(result)
+        if(location is not None and location != ""):
+            selector = {'location': {'$eq': location}}
+            docs = db.get_query_result(selector)            
+            for doc in docs:
+                result.append(doc)
+            return jsonify(result)
+        else:
+            for doc in db:
+                result.append(doc)
+            return jsonify(result)
     else:
         selector = {}
         if(manufacturer is not None and manufacturer != ""):
@@ -143,8 +153,10 @@ def apply_for_job(worker_id, job_id):
 def delete_all(type):
     if type == "users":
         db = client[userDatabaseName]
-    if type == "jobs":
+    elif type == "jobs":
         db = client[jobDatabaseName]
+    elif type == "products":
+        db = client[productDatabaseName]
     result = []
     for doc in db:
         doc.delete()
@@ -161,6 +173,55 @@ def user_login():
         if doc['password'] == request.json['password']:
             return jsonify(doc)
     return Response(status = 400)
+
+##Product Postings
+@app.route('/v1.0/products', methods=['POST'])
+def post_prod():
+    db = client[productDatabaseName]
+    if not request.json:
+        abort(400)
+    document = db.create_document(request.json)
+    # document.save()
+    return jsonify(document)
+
+@app.route('/v1.0/products/<id>', methods=['GET'])
+def get_prod_by_id(id):
+    db = client[productDatabaseName]
+    selector = {'_id': {'$eq': id}}
+    docs = db.get_query_result(selector)
+    result = []
+    for doc in docs:
+        result.append(doc)
+    return jsonify(result)
+
+@app.route('/v1.0/products', methods=['GET'])
+def get_query_prods():
+    db = client[productDatabaseName]
+    item = request.args.get('item')
+    location = request.args.get('location')
+    if item ==  "all":
+        result = []
+        if(location is not None and location != ""):
+            selector = {'location': {'$eq': location}}
+            docs = db.get_query_result(selector)            
+            for doc in docs:
+                result.append(doc)
+            return jsonify(result)
+        else:
+            for doc in db:
+                result.append(doc)
+            return jsonify(result)
+    else:
+        selector = {}
+        if(item is not None and item != ""):
+            selector['item'] = {'$eq': item}
+        if(location is not None and location != ""):
+            selector['location'] = {'$eq': location}
+        docs = db.get_query_result(selector)
+        result = []
+        for doc in docs:
+            result.append(doc)
+        return jsonify(result)
 
 if __name__=='__main__':
     app.run(host='0.0.0.0', port=port)

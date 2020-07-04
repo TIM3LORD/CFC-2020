@@ -1,79 +1,34 @@
 {
 	"info": {
-		"_postman_id": "5f8dada2-5db9-4387-9faf-05f05216bc4d",
+		"_postman_id": "7ae5dc72-0f14-4117-bb2c-a17d96185cba",
 		"name": "Call For Code",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
 		{
-			"name": "Get Users by Query",
+			"name": "Login",
 			"request": {
-				"method": "GET",
-				"header": [],
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"emailAddress\" : \"test4@worker.com\",\n\t\"password\" : \"12345abc\"\n}"
+				},
 				"url": {
-					"raw": "http://{{url}}/v1.0/users?type=worker",
+					"raw": "http://{{url}}/v1.0/login",
 					"protocol": "http",
 					"host": [
 						"{{url}}"
 					],
 					"path": [
 						"v1.0",
-						"users"
-					],
-					"query": [
-						{
-							"key": "type",
-							"value": "worker"
-						}
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Get Manufacturer",
-			"request": {
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "http://{{url}}/v1.0/users?type=manufacturer&email=manufacturertest1%40worker.com",
-					"protocol": "http",
-					"host": [
-						"{{url}}"
-					],
-					"path": [
-						"v1.0",
-						"users"
-					],
-					"query": [
-						{
-							"key": "type",
-							"value": "manufacturer"
-						},
-						{
-							"key": "email",
-							"value": "manufacturertest1%40worker.com"
-						}
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Get User By Id",
-			"request": {
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "http://{{url}}/v1.0/users/d58484c08815e32d281135288a66d3a5",
-					"protocol": "http",
-					"host": [
-						"{{url}}"
-					],
-					"path": [
-						"v1.0",
-						"users",
-						"d58484c08815e32d281135288a66d3a5"
+						"login"
 					]
 				}
 			},
@@ -109,6 +64,80 @@
 					"path": [
 						"v1.0",
 						"users"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Users by Query",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://{{url}}/v1.0/users?type=worker",
+					"protocol": "http",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"v1.0",
+						"users"
+					],
+					"query": [
+						{
+							"key": "type",
+							"value": "worker"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get User By Id",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://{{url}}/v1.0/users/d58484c08815e32d281135288a66d3a5",
+					"protocol": "http",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"v1.0",
+						"users",
+						"d58484c08815e32d281135288a66d3a5"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Manufacturer",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://{{url}}/v1.0/users?type=manufacturer&email=manufacturertest1%40worker.com",
+					"protocol": "http",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"v1.0",
+						"users"
+					],
+					"query": [
+						{
+							"key": "type",
+							"value": "manufacturer"
+						},
+						{
+							"key": "email",
+							"value": "manufacturertest1%40worker.com"
+						}
 					]
 				}
 			},
@@ -283,7 +312,7 @@
 					}
 				},
 				"url": {
-					"raw": "http://{{url}}/v1.0/jobs?manufacturer=d447ccd97f241af720e79c94826ebcac",
+					"raw": "http://{{url}}/v1.0/jobs?manufacturer=all&location=Goa",
 					"protocol": "http",
 					"host": [
 						"{{url}}"
@@ -295,11 +324,15 @@
 					"query": [
 						{
 							"key": "manufacturer",
-							"value": "d447ccd97f241af720e79c94826ebcac"
+							"value": "all"
+						},
+						{
+							"key": "location",
+							"value": "Goa"
 						}
 					]
 				},
-				"description": "/v1.0/jobs?manufacturer=manufacturer_id&location=location_state"
+				"description": "/v1.0/jobs?manufacturer=manufacturer_id&location=location_state\r\n\r\nmanufactuere=all will return all"
 			},
 			"response": []
 		},
@@ -327,7 +360,130 @@
 			"response": []
 		},
 		{
-			"name": "Delete all users/jobs",
+			"name": "Post Product listing",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"title\":\"Test Product Posting 1\",\n    \"description\":\"Test for products posted\",\n    \"location\":\"Delhi\",\n    \"manufacturerId\":\"d58484c08815e32d281135288a66e190\",  \n\t\"image\":\"3945y2342895745344535\",\n    \"item\":\"full kit\",\n    \"quantity\":\"100\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://{{url}}/v1.0/products",
+					"protocol": "http",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"v1.0",
+						"products"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Products Query",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://{{url}}/v1.0/products?item=all&location=Goa",
+					"protocol": "http",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"v1.0",
+						"products"
+					],
+					"query": [
+						{
+							"key": "item",
+							"value": "all"
+						},
+						{
+							"key": "location",
+							"value": "Goa"
+						}
+					]
+				},
+				"description": "/v1.0/jobs?item=item&location=location_state\r\n\r\nitem can be all/mask/gloves/kit"
+			},
+			"response": []
+		},
+		{
+			"name": "Get Product by id",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://{{url}}/v1.0/products/52c961369c3a8fd3ddab41b07c3ebe89",
+					"protocol": "http",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"v1.0",
+						"products",
+						"52c961369c3a8fd3ddab41b07c3ebe89"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete all users/jobs/products",
 			"request": {
 				"method": "POST",
 				"header": [],
@@ -350,35 +506,6 @@
 						"v1.0",
 						"delete",
 						"jobs"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Login",
-			"request": {
-				"method": "POST",
-				"header": [
-					{
-						"key": "Content-Type",
-						"value": "application/json",
-						"type": "text"
-					}
-				],
-				"body": {
-					"mode": "raw",
-					"raw": "{\n\t\"emailAddress\" : \"test4@worker.com\",\n\t\"password\" : \"12345abc\"\n}"
-				},
-				"url": {
-					"raw": "http://{{url}}/v1.0/login",
-					"protocol": "http",
-					"host": [
-						"{{url}}"
-					],
-					"path": [
-						"v1.0",
-						"login"
 					]
 				}
 			},
