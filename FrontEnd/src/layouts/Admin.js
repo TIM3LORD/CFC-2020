@@ -16,28 +16,64 @@ import styles from "assets/jss/material-dashboard-react/layouts/adminStyle.js";
 
 import bgImage from "assets/img/sidebar-2.jpg";
 import logo from "assets/img/reactlogo.png";
+import { useGlobalState } from "index.js";
 
 let ps;
 
 const switchRoutes = (
   <Switch>
     {routes.map((prop, key) => {
-      if (prop.layout === "/admin") {
-        return (
-          <Route
-            path={prop.layout + prop.path}
-            component={prop.component}
-            key={key}
-          />
-        );
-      }
+      return (
+        <Route
+          path={prop.layout + prop.path}
+          component={prop.component}
+          key={key}
+        />
+      );
       return null;
     })}
     <Redirect from="/admin" to="/admin/dashboard" />
   </Switch>
 );
 
+function createRoutes(user) {
+  let newRoutes = [];
+  if (!user) {
+    newRoutes = routes.filter((r) => {
+      return defaultRoutes.includes(r.name)
+    }).map((prop, key) => {
+      return (
+        <Route
+          path={prop.layout + prop.path}
+          component={prop.component}
+          key={key}
+        />
+      );
+    });
+  }
+  else {
+    newRoutes = routes.filter((r) => {
+      return manufacturerRoutes.includes(r.name)
+    }).map((prop, key) => {
+      return (
+        <Route
+          path={prop.layout + prop.path}
+          component={prop.component}
+          key={key}
+        />
+      );
+    });
+  }
+}
+
 const useStyles = makeStyles(styles);
+
+const workerRoutes = ["Dashboard", "Job Search"];
+const manufacturerRoutes = ["Dashboard", "Job Postings"];
+const buyerRoutes = ["Dashboard"];
+const defaultRoutes = ["Dashboard", "Register", "Login"];
+
+
 
 export default function Admin({ ...rest }) {
   // styles
@@ -48,7 +84,9 @@ export default function Admin({ ...rest }) {
   const [image] = React.useState(bgImage);
   const [color] = React.useState("blue");
   const [mobileOpen, setMobileOpen] = React.useState(false);
+  const [state, dispatch] = useGlobalState();
 
+  console.log(state.user)
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
   };
@@ -78,42 +116,39 @@ export default function Admin({ ...rest }) {
       window.removeEventListener("resize", resizeFunction);
     };
   }, [mainPanel]);
+  const zRoutes = routes.filter((r) => {
+    if (!state.user)
+      return defaultRoutes.includes(r.name);
+    else if (state.user.type == "manufacturer")
+      return manufacturerRoutes.includes(r.name);
+    else if (state.user.type == "worker")
+      return workerRoutes.includes(r.name);
+    else if (state.user.type == "buyer")
+      return buyerRoutes.includes(r.name);
+  });
   return (
-    <div className={classes.wrapper}>
-      <Sidebar
-        routes={routes}
-        logoText={"CFC 2020"}
-        logo={logo}
-        image={image}
-        handleDrawerToggle={handleDrawerToggle}
-        open={mobileOpen}
-        color={color}
-        {...rest}
-      />
-      <div className={classes.mainPanel} ref={mainPanel}>
-        <Navbar
-          routes={routes}
+      <div className={classes.wrapper}>
+        <Sidebar
+          routes={zRoutes}
+          logoText={"ConnectALL"}
+          logo={logo}
+          image={image}
           handleDrawerToggle={handleDrawerToggle}
+          open={mobileOpen}
+          color={color}
           {...rest}
         />
-        {/* On the /maps route we want the map to be on full screen - this is not possible if the content and conatiner classes are present because they have some paddings which would make the map smaller */}
-        {getRoute() ? (
+        <div className={classes.mainPanel} ref={mainPanel}>
+          <Navbar
+            routes={zRoutes}
+            handleDrawerToggle={handleDrawerToggle}
+            {...rest}
+          />
           <div className={classes.content}>
             <div className={classes.container}>{switchRoutes}</div>
           </div>
-        ) : (
-          <div className={classes.map}>{switchRoutes}</div>
-        )}
-        {getRoute() ? <Footer /> : null}
-        {/* <FixedPlugin
-          handleImageClick={handleImageClick}
-          handleColorClick={handleColorClick}
-          bgColor={color}
-          bgImage={image}
-          handleFixedClick={handleFixedClick}
-          fixedClasses={fixedClasses}
-        /> */}
+          <Footer />
+        </div>
       </div>
-    </div>
   );
 }

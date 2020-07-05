@@ -1,0 +1,26 @@
+@host = flask-router.eu-gb.cf.appdomain.cloud
+
+POST http://{{host}}/v1.0/login HTTP/1.1
+content-type: application/json
+
+{
+    "emailAddress": "test4@worker.com",
+    "password": "12345abc"
+};
+
+###
+
+GET http://{{host}}/v1.0/jobs?manufacturer=d447ccd97f241af720e79c94826ebcac HTTP/1.1
+content-type: application/json
+
+###
+
+GET http://{{host}}/v1.0/users?type=worker HTTP/1.1
+content-type: application/json
+
+###
+
+@userID = d58484c08815e32d281135288a66d3a5
+
+GET http://{{host}}/v1.0/users/{{userID}}
+content-type: application/json

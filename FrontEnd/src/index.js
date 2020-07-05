@@ -27,12 +27,39 @@ import "assets/css/material-dashboard-react.css?v=1.9.0";
 
 const hist = createBrowserHistory();
 
+const defaultGlobalState = {
+  user: null,
+  num: 0
+};
+
+const globalStateContext = React.createContext(defaultGlobalState);
+const dispatchStateContext = React.createContext(undefined);
+export const useGlobalState = () => [
+  React.useContext(globalStateContext),
+  React.useContext(dispatchStateContext)
+];
+
+const GlobalStateProvider = ({ children }) => {
+  const [state, dispatch] = React.useReducer(
+    (state, newValue) => ({ ...state, ...newValue }),
+    defaultGlobalState
+  );
+  return (
+    <globalStateContext.Provider value={state}>
+      <dispatchStateContext.Provider value={dispatch}>
+        {children}
+      </dispatchStateContext.Provider>
+    </globalStateContext.Provider>
+  );
+};
+
 ReactDOM.render(
-  <Router history={hist}>
-    <Switch>
-      <Route path="/admin" component={Admin} />
-      <Redirect from="/" to="/admin/dashboard" />
-    </Switch>
-  </Router>,
+  <GlobalStateProvider>
+    <Router history={hist}>
+      <Switch>
+        <Route path="/admin" component={Admin} />
+      </Switch>
+    </Router>
+  </GlobalStateProvider>,
   document.getElementById("root")
 );

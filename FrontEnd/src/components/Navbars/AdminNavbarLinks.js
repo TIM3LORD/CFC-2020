@@ -18,13 +18,19 @@ import CustomInput from "components/CustomInput/CustomInput.js";
 import Button from "components/CustomButtons/Button.js";
 
 import styles from "assets/jss/material-dashboard-react/components/headerLinksStyle.js";
+import { useGlobalState } from "index.js";
+import { useHistory } from "react-router-dom";
 
 const useStyles = makeStyles(styles);
+
 
 export default function AdminNavbarLinks() {
   const classes = useStyles();
   const [openNotification, setOpenNotification] = React.useState(null);
   const [openProfile, setOpenProfile] = React.useState(null);
+  const [state, dispatch] = useGlobalState();
+  const history = useHistory();
+
   const handleClickNotification = event => {
     if (openNotification && openNotification.contains(event.target)) {
       setOpenNotification(null);
@@ -44,10 +50,18 @@ export default function AdminNavbarLinks() {
   };
   const handleCloseProfile = () => {
     setOpenProfile(null);
+    dispatch({ user: null });
+    history.push("/admin/dashboard");
   };
+
+  const handleCloseProfileAway = () => {
+    setOpenProfile(null);
+  }
+
+
   return (
     <div>
-      <div className={classes.manager}>
+      {/* <div className={classes.manager}>
         <Button
           color={window.innerWidth > 959 ? "transparent" : "white"}
           justIcon={window.innerWidth > 959}
@@ -118,8 +132,8 @@ export default function AdminNavbarLinks() {
             </Grow>
           )}
         </Poppers>
-      </div>
-      <div className={classes.manager}>
+      </div> */}
+      {state.user ? (<div className={classes.manager}>
         <Button
           color={window.innerWidth > 959 ? "transparent" : "white"}
           justIcon={window.innerWidth > 959}
@@ -155,21 +169,14 @@ export default function AdminNavbarLinks() {
               }}
             >
               <Paper>
-                <ClickAwayListener onClickAway={handleCloseProfile}>
+                <ClickAwayListener onClickAway={handleCloseProfileAway}>
                   <MenuList role="menu">
-                    <MenuItem
+                    {/* <MenuItem
                       onClick={handleCloseProfile}
                       className={classes.dropdownItem}
                     >
                       Profile
-                    </MenuItem>
-                    <MenuItem
-                      onClick={handleCloseProfile}
-                      className={classes.dropdownItem}
-                    >
-                      Settings
-                    </MenuItem>
-                    <Divider light />
+                    </MenuItem> */}
                     <MenuItem
                       onClick={handleCloseProfile}
                       className={classes.dropdownItem}
@@ -182,7 +189,7 @@ export default function AdminNavbarLinks() {
             </Grow>
           )}
         </Poppers>
-      </div>
+      </div>) : ""}
     </div>
   );
 }

@@ -33,6 +33,8 @@ import CardHeader from "components/Card/CardHeader.js";
 import CardIcon from "components/Card/CardIcon.js";
 import CardBody from "components/Card/CardBody.js";
 import CardFooter from "components/Card/CardFooter.js";
+import Button from "components/CustomButtons/Button.js";
+import { useGlobalState } from "index.js";
 
 import { bugs, website, server } from "variables/general.js";
 
@@ -50,43 +52,48 @@ let i = 0;
 
 export default function Dashboard() {
   const classes = useStyles();
+  const [state, dispatch] = useGlobalState();
   const [covidStats, setStats] = useState({
-    "confirmed" : "-",
-    "active" : "-",
-    "recovered" : "-",
-    "deceased" : "-"
+    "confirmed": "-",
+    "active": "-",
+    "recovered": "-",
+    "deceased": "-"
   });
   const [metas, setMetas] = useState(
     {
-      "confirmed" : "-",
-      "lastUpdated" : "-",
-      "recovered" : "-",
-      "deceased" : "-"
+      "confirmed": "-",
+      "lastUpdated": "-",
+      "recovered": "-",
+      "deceased": "-"
     }
   )
 
+  function changeState() {
+      dispatch({num: state.num + 1});
+  }
+
   useEffect(() => {
     axios.get('https://api.covid19india.org/v3/min/data.min.json')
-    .then(res => {
-      const total = res.data.TT.total;
-      const delta = res.data.TT.delta;
-      const meta = res.data.TT.meta;
-      setStats({
-        "confirmed" : total.confirmed,
-        "active" : total.confirmed - total.migrated - total.deceased - total.recovered,
-        "recovered" : total.recovered,
-        "deceased" : total.deceased,
+      .then(res => {
+        const total = res.data.TT.total;
+        const delta = res.data.TT.delta;
+        const meta = res.data.TT.meta;
+        setStats({
+          "confirmed": total.confirmed,
+          "active": total.confirmed - total.migrated - total.deceased - total.recovered,
+          "recovered": total.recovered,
+          "deceased": total.deceased,
+        });
+        var formattedTime = new Date(Date.parse(meta.last_updated)).toLocaleTimeString();
+        var formattedDate = new Date(Date.parse(meta.last_updated)).toLocaleDateString();
+        setMetas({
+          "confirmed": delta.confirmed,
+          "lastUpdated": formattedTime,
+          "recovered": delta.recovered,
+          "deceased": delta.deceased
+        })
+        console.log(i++)
       });
-      var formattedTime = new Date(Date.parse(meta.last_updated)).toLocaleTimeString();
-      var formattedDate = new Date(Date.parse(meta.last_updated)).toLocaleDateString();
-      setMetas({
-        "confirmed" : delta.confirmed,
-        "lastUpdated" : formattedTime,
-        "recovered" : delta.recovered,
-        "deceased" : delta.deceased
-      })
-      console.log(i++)
-    });
   }, [])
 
   return (
@@ -100,7 +107,7 @@ export default function Dashboard() {
               </CardIcon>
               <p className={classes.cardCategory}>Confirmed</p>
               <h3 className={classes.cardTitle}>
-                { covidStats.confirmed.toLocaleString() }
+                {covidStats.confirmed.toLocaleString()}
               </h3>
             </CardHeader>
             <CardFooter stats>
@@ -108,7 +115,7 @@ export default function Dashboard() {
                 <Danger>
                   <Icon>trending_up</Icon>
                 </Danger>
-                  { metas.confirmed.toLocaleString() }
+                {metas.confirmed.toLocaleString()}
               </div>
             </CardFooter>
           </Card>
@@ -121,7 +128,7 @@ export default function Dashboard() {
               </CardIcon>
               <p className={classes.cardCategory}>Active</p>
               <h3 className={classes.cardTitle}>
-                { covidStats.active.toLocaleString() }
+                {covidStats.active.toLocaleString()}
               </h3>
             </CardHeader>
             <CardFooter stats>
@@ -129,7 +136,7 @@ export default function Dashboard() {
                 <Info>
                   <DateRange />
                 </Info>
-                Last updated at { metas.lastUpdated }
+                Last updated at {metas.lastUpdated}
               </div>
             </CardFooter>
           </Card>
@@ -142,7 +149,7 @@ export default function Dashboard() {
               </CardIcon>
               <p className={classes.cardCategory}>Recovered</p>
               <h3 className={classes.cardTitle}>
-                { covidStats.recovered.toLocaleString() }
+                {covidStats.recovered.toLocaleString()}
               </h3>
             </CardHeader>
             <CardFooter stats>
@@ -150,7 +157,7 @@ export default function Dashboard() {
                 <Success>
                   <Icon>trending_up</Icon>
                 </Success>
-                { metas.recovered.toLocaleString() }
+                {metas.recovered ? metas.recovered.toLocaleString() : "-"}
               </div>
             </CardFooter>
           </Card>
@@ -163,15 +170,15 @@ export default function Dashboard() {
               </CardIcon>
               <p className={classes.cardCategory}>Deceased</p>
               <h3 className={classes.cardTitle}>
-                { covidStats.deceased.toLocaleString() }
+                {covidStats.deceased.toLocaleString()}
               </h3>
             </CardHeader>
             <CardFooter stats>
               <div className={classes.stats}>
-              <WarningColor>
-                <Icon>trending_up</Icon>
-              </WarningColor>
-                { metas.deceased.toLocaleString() }
+                <WarningColor>
+                  <Icon>trending_up</Icon>
+                </WarningColor>
+                {metas.deceased ? metas.deceased.toLocaleString() : ""}
               </div>
             </CardFooter>
           </Card>
@@ -250,6 +257,7 @@ export default function Dashboard() {
             </CardFooter>
           </Card>
         </GridItem>
+        <Button color="primary" onClick={changeState} >Hello</Button>
       </GridContainer>
     </div>
   );

@@ -17,6 +17,7 @@
 */
 // @material-ui/icons
 import Dashboard from "@material-ui/icons/Dashboard";
+import NoteIcon from "@material-ui/icons/EventNote";
 import PersonAdd from "@material-ui/icons/PersonAdd";
 import LoginIcon from "@material-ui/icons/Person";
 import LibraryBooks from "@material-ui/icons/LibraryBooks";
@@ -28,6 +29,7 @@ import Notifications from "@material-ui/icons/Notifications";
 import DashboardPage from "views/Dashboard/Dashboard.js";
 import RegistrationPage from "views/Registration/Registration.js";
 import LoginPage from "views/Login/Login.js";
+import JobPostingsPage from "views/JobPostings/JobPostings.js";
 import UserProfile from "views/UserProfile/UserProfile.js";
 import TableList from "views/TableList/TableList.js";
 import Typography from "views/Typography/Typography.js";
@@ -42,6 +44,14 @@ const dashboardRoutes = [
     rtlName: "لوحة القيادة",
     icon: Dashboard,
     component: DashboardPage,
+    layout: "/admin"
+  },
+  {
+    path: "/jobposting",
+    name: "Job Postings",
+    rtlName: "لوحة القيادة",
+    icon: NoteIcon,
+    component: JobPostingsPage,
     layout: "/admin"
   },
   {
