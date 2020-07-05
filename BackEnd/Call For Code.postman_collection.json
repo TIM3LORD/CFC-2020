@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "1b4a859c-598e-4375-863c-623d2aefce20",
+		"_postman_id": "7fdbaf09-e887-4d40-867e-d91af8d71fcf",
 		"name": "Call For Code",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -514,18 +514,26 @@
 		{
 			"name": "Threat detect by state",
 			"request": {
-				"method": "GET",
+				"method": "POST",
 				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"state\":\"Goa\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
 				"url": {
-					"raw": "http://{{url}}/v1.0/threat-detect/Goa",
+					"raw": "http://{{url}}/v1.0/threat-detect",
 					"protocol": "http",
 					"host": [
 						"{{url}}"
 					],
 					"path": [
 						"v1.0",
-						"threat-detect",
-						"Goa"
+						"threat-detect"
 					]
 				}
 			},

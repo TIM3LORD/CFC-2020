@@ -224,8 +224,9 @@ def get_query_prods():
             result.append(doc)
         return jsonify(result)
 
-@app.route('/v1.0/threat-detect/<state_name>', methods=['GET'])
-def threat_detect_by_state(state_name):
+@app.route('/v1.0/threat-detect', methods=['POST'])
+def threat_detect_by_state():
+    state_name = request.json['state']
     r = requests.get(url=covid_india_url)
     if r.status_code == 200:
         states = r.json()['data']['statewise']
@@ -235,11 +236,11 @@ def threat_detect_by_state(state_name):
         docs = db.get_query_result(selector)
         job_count = sum(1 for doc in docs)
         if state and state['active'] > 500:
-            response = {'message' : 'There are ' + str(state['active']) + ' active cases in your area, Please do wear a mask and stay safe.'}
+            response = {'message' : 'I see that there are ' + str(state['active']) + ' active cases in your area, Please do wear a mask and stay safe!'}
             response['jobCount'] = job_count
             return response
         elif state:
-            response = {'message' : 'All Clear!'}
+            response = {'message' : 'There do not seem to be too many active cases in your area, Please do wear a mask and stay safe!'}
             response['jobCount'] = job_count
             return response
         elif not state:
