@@ -236,7 +236,7 @@ def threat_detect_by_state():
         docs = db.get_query_result(selector)
         job_count = sum(1 for doc in docs)
         if state and state['active'] > 500:
-            response = {'message' : 'I see that there are ' + str(state['active']) + ' active cases in your area, Please do wear a mask and stay safe!'}
+            response = {'message' : 'I can see that there are ' + str(state['active']) + ' active cases in your area, Please do wear a mask and stay safe!'}
             response['jobCount'] = job_count
             return response
         elif state:
