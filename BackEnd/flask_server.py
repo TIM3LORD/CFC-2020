@@ -200,6 +200,7 @@ def get_query_prods():
     db = client[productDatabaseName]
     item = request.args.get('item')
     location = request.args.get('location')
+    manufacturer = request.args.get('manufacturer')
     if item ==  "all":
         result = []
         if(location is not None and location != ""):
@@ -218,6 +219,8 @@ def get_query_prods():
             selector['item'] = {'$eq': item}
         if(location is not None and location != ""):
             selector['location'] = {'$eq': location}
+        if(manufacturer is not None and manufacturer != ""):
+            selector['manufacturerId'] = {'$eq': manufacturer}
         docs = db.get_query_result(selector)
         result = []
         for doc in docs:
