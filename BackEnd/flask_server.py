@@ -203,16 +203,22 @@ def get_query_prods():
     manufacturer = request.args.get('manufacturer')
     if item ==  "all":
         result = []
+        selector = {}
         if(location is not None and location != ""):
-            selector = {'location': {'$eq': location}}
+            selector['location'] = {'$eq': location}
+        if(manufacturer is not None and manufacturer != ""):
+            selector['manufacturerId'] = {'$eq': manufacturer}
+            
+        if(selector != {}):
             docs = db.get_query_result(selector)            
             for doc in docs:
                 result.append(doc)
             return jsonify(result)
-        else:
-            for doc in db:
-                result.append(doc)
-            return jsonify(result)
+        
+        for doc in db:
+            result.append(doc)
+        return jsonify(result)
+        
     else:
         selector = {}
         if(item is not None and item != ""):
