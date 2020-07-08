@@ -32,7 +32,7 @@ export default function Products() {
         let newProductCardList = [];
         let newProductList = productList;
         newProductList = newProductList.filter((p) => {
-            if (p.item.toLowerCase().indexOf(keyword) != -1 || p.title.indexOf(keyword) != -1 || p.description.indexOf(keyword) != -1)
+            if (p.item.toLowerCase().indexOf(keyword) != -1 || p.title.toLowerCase().indexOf(keyword) != -1 || p.description.toLowerCase().indexOf(keyword) != -1)
                 return true;
             else
                 return false;
