@@ -419,7 +419,7 @@
 					}
 				},
 				"url": {
-					"raw": "http://{{url}}/v1.0/products?item=all&location=Goa",
+					"raw": "http://{{url}}/v1.0/products?item=all&manufacturer=d58484c08815e32d281135288a66e200&location=Kerela",
 					"protocol": "http",
 					"host": [
 						"{{url}}"
@@ -434,8 +434,12 @@
 							"value": "all"
 						},
 						{
+							"key": "manufacturer",
+							"value": "d58484c08815e32d281135288a66e200"
+						},
+						{
 							"key": "location",
-							"value": "Goa"
+							"value": "Kerela"
 						}
 					]
 				},

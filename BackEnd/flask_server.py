@@ -15,6 +15,7 @@ if "CLOUDANT_URL" in os.environ:
     url = os.environ['CLOUDANT_URL']
     geo_code_url = os.environ['HERE_GEO_CODE_URL']
     here_api_key = os.environ['HERE_API_KEY']
+    covid_india_url = os.environ['COVID_INDIA_URL']
 
 #When running locally
 elif os.path.isfile('vcap-local.json'):
@@ -27,6 +28,7 @@ elif os.path.isfile('vcap-local.json'):
         url = creds['host']
         here_api_key = creds['hereApiKey']
         geo_code_url = creds['geoCodeUrl']
+        covid_india_url = creds['covidIndiaUrl']
 
 userDatabaseName = "userdb"
 jobDatabaseName = "jobsdb"
@@ -39,7 +41,6 @@ CORS(app)
 
 client = Cloudant(user, password, url=url)
 client.connect()
-client.create_database(productDatabaseName)
 @app.route('/v1.0/users', methods=['POST'])
 def post_user():
     db = client[userDatabaseName]
@@ -199,29 +200,62 @@ def get_query_prods():
     db = client[productDatabaseName]
     item = request.args.get('item')
     location = request.args.get('location')
+    manufacturer = request.args.get('manufacturer')
     if item ==  "all":
         result = []
+        selector = {}
         if(location is not None and location != ""):
-            selector = {'location': {'$eq': location}}
+            selector['location'] = {'$eq': location}
+        if(manufacturer is not None and manufacturer != ""):
+            selector['manufacturerId'] = {'$eq': manufacturer}
+            
+        if(selector != {}):
             docs = db.get_query_result(selector)            
             for doc in docs:
                 result.append(doc)
             return jsonify(result)
-        else:
-            for doc in db:
-                result.append(doc)
-            return jsonify(result)
+        
+        for doc in db:
+            result.append(doc)
+        return jsonify(result)
+        
     else:
         selector = {}
         if(item is not None and item != ""):
             selector['item'] = {'$eq': item}
         if(location is not None and location != ""):
             selector['location'] = {'$eq': location}
+        if(manufacturer is not None and manufacturer != ""):
+            selector['manufacturerId'] = {'$eq': manufacturer}
         docs = db.get_query_result(selector)
         result = []
         for doc in docs:
             result.append(doc)
         return jsonify(result)
+
+@app.route('/v1.0/threat-detect', methods=['POST'])
+def threat_detect_by_state():
+    state_name = request.json['state']
+    r = requests.get(url=covid_india_url)
+    if r.status_code == 200:
+        states = r.json()['data']['statewise']
+        state = next((state for state in states if state['state'] == state_name), False)
+        db = client[jobDatabaseName]
+        selector = {'location': {'$eq': state_name}}
+        docs = db.get_query_result(selector)
+        job_count = sum(1 for doc in docs)
+        if state and state['active'] > 500:
+            response = {'message' : 'I can see that there are ' + str(state['active']) + ' active cases in your area, Please do wear a mask and stay safe!'}
+            response['jobCount'] = job_count
+            return response
+        elif state:
+            response = {'message' : 'There do not seem to be too many active cases in your area, Please do wear a mask and stay safe!'}
+            response['jobCount'] = job_count
+            return response
+        elif not state:
+            abort(404)
+    else:
+        abort(400)
 
 if __name__=='__main__':
     app.run(host='0.0.0.0', port=port)
