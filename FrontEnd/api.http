@@ -24,3 +24,8 @@ content-type: application/json
 
 GET http://{{host}}/v1.0/users/{{userID}}
 content-type: application/json
+
+####
+
+GET http://{{host}}/v1.0/products?item=all
+content-type: application/json

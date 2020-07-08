@@ -41,18 +41,18 @@ export default function Login() {
 
     function loginUser() {
         console.log(email, password, selectedValue);
-        //axios.post('http://flask-router.eu-gb.cf.appdomain.cloud/v1.0/login', {
-        axios.post('https://run.mocky.io/v3/4b83fde1-b5ff-49f7-9454-c378f5c0d97c',{
+        axios.post('http://flask-router.eu-gb.cf.appdomain.cloud/v1.0/login', {
+        //axios.post('https://run.mocky.io/v3/4b83fde1-b5ff-49f7-9454-c378f5c0d97c',{
             emailAddress: email,
             password: password
         }).then((res) => {
-            console.log(res);
+            console.log(res.data);
             dispatch({
                 user: {
-                    id: "d447ccd97f241af720e79c94826ebcac",
-                    type: "manufacturer"
+                    id: res.data._id,
+                    type: res.data.type
                 }
-            })
+            });
             history.push("/admin/dashboard");
         }).catch(function (error) {
             setLoginFailed(true);

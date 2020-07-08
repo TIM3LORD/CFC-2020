@@ -69,8 +69,8 @@ function createRoutes(user) {
 const useStyles = makeStyles(styles);
 
 const workerRoutes = ["Dashboard", "Job Search"];
-const manufacturerRoutes = ["Dashboard", "Job Postings"];
-const buyerRoutes = ["Dashboard"];
+const manufacturerRoutes = ["Dashboard", "Job Postings", "Product Listing", "Shortlisted Applicants"];
+const buyerRoutes = ["Dashboard", "Product Search"];
 const defaultRoutes = ["Dashboard", "Register", "Login"];
 
 

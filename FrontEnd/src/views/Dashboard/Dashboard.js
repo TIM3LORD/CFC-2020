@@ -69,7 +69,7 @@ export default function Dashboard() {
   )
 
   function changeState() {
-      dispatch({num: state.num + 1});
+    dispatch({ num: state.num + 1 });
   }
 
   useEffect(() => {
@@ -94,6 +94,26 @@ export default function Dashboard() {
         })
         console.log(i++)
       });
+
+    //Twitter Stuff
+    const anchor = document.createElement("a");
+    anchor.setAttribute("class", "twitter-timeline");
+    anchor.setAttribute("data-theme", "light");
+    anchor.setAttribute("data-height", "400");
+    // anchor.setAttribute("data-tweet-limit", "5");
+    anchor.setAttribute("data-chrome", "noheader nofooter noborders");
+    anchor.setAttribute("href", "https://twitter.com/covidnewsbymib");
+    document.getElementsByClassName("twitter-embed")[0].appendChild(anchor);
+
+    const covidMap = document.getElementById("covid-map");
+    const script = document.createElement("script");
+    script.setAttribute("src", "https://platform.twitter.com/widgets.js");
+    document.getElementsByClassName("twitter-embed")[0].appendChild(script);
+
+    const covidMapScript = document.createElement("script");
+    covidMapScript.setAttribute("src","https://public.flourish.studio/resources/embed.js");
+    covidMap.appendChild(covidMapScript);
+
   }, [])
 
   return (
@@ -184,7 +204,7 @@ export default function Dashboard() {
           </Card>
         </GridItem>
       </GridContainer>
-      <GridContainer>
+      {/* <GridContainer>
         <GridItem xs={12} sm={12} md={4}>
           <Card chart>
             <CardHeader color="success">
@@ -257,7 +277,14 @@ export default function Dashboard() {
             </CardFooter>
           </Card>
         </GridItem>
-        <Button color="primary" onClick={changeState} >Hello</Button>
+      </GridContainer> */}
+      <GridContainer>
+        <GridItem xs={12} sm={12} md={6}>
+          <div className="twitter-embed"></div>
+        </GridItem>
+        <GridItem xs={12} sm={12} md={6}>
+        <div id="covid-map" className="flourish-embed flourish-chart" data-src="story/230085"></div>
+        </GridItem>
       </GridContainer>
     </div>
   );

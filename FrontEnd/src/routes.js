@@ -20,6 +20,9 @@ import Dashboard from "@material-ui/icons/Dashboard";
 import NoteIcon from "@material-ui/icons/EventNote";
 import PersonAdd from "@material-ui/icons/PersonAdd";
 import LoginIcon from "@material-ui/icons/Person";
+import ListIcon from "@material-ui/icons/List";
+import GroupIcon from "@material-ui/icons/Group";
+import SearchIcon from "@material-ui/icons/Search";
 import LibraryBooks from "@material-ui/icons/LibraryBooks";
 import BubbleChart from "@material-ui/icons/BubbleChart";
 import LocationOn from "@material-ui/icons/LocationOn";
@@ -30,12 +33,12 @@ import DashboardPage from "views/Dashboard/Dashboard.js";
 import RegistrationPage from "views/Registration/Registration.js";
 import LoginPage from "views/Login/Login.js";
 import JobPostingsPage from "views/JobPostings/JobPostings.js";
-import UserProfile from "views/UserProfile/UserProfile.js";
-import TableList from "views/TableList/TableList.js";
-import Typography from "views/Typography/Typography.js";
+import ProductListingPage from "views/ProductListing/ProductListing.js";
+import ApplicantPage from "views/Applicants/Applicants.js";
+import ProductsPage from "views/Products/Products.js";
+import JobSearchPage from "views/JobSearch/JobSearch.js";
 import Icons from "views/Icons/Icons.js";
-import Maps from "views/Maps/Maps.js";
-import NotificationsPage from "views/Notifications/Notifications.js";
+
 
 const dashboardRoutes = [
   {
@@ -68,6 +71,38 @@ const dashboardRoutes = [
     rtlName: "لوحة القيادة",
     icon: LoginIcon,
     component: LoginPage,
+    layout: "/admin"
+  },
+  {
+    path: "/productlisting",
+    name: "Product Listing",
+    rtlName: "لوحة القيادة",
+    icon: ListIcon,
+    component: ProductListingPage,
+    layout: "/admin"
+  },
+  {
+    path: "/applicants",
+    name: "Shortlisted Applicants",
+    rtlName: "لوحة القيادة",
+    icon: GroupIcon,
+    component: ApplicantPage,
+    layout: "/admin"
+  },
+  {
+    path: "/products",
+    name: "Product Search",
+    rtlName: "لوحة القيادة",
+    icon: SearchIcon,
+    component: ProductsPage,
+    layout: "/admin"
+  },
+  {
+    path: "/jobsearch",
+    name: "Job Search",
+    rtlName: "لوحة القيادة",
+    icon: SearchIcon,
+    component: JobSearchPage,
     layout: "/admin"
   }
 ];

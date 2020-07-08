@@ -49,6 +49,9 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
+import CancelIcon from "@material-ui/icons/Cancel";
+import Snackbar from "components/Snackbar/Snackbar.js";
+import CheckIcon from "@material-ui/icons/Check";
 
 import {
     dailySalesChart,
@@ -69,35 +72,85 @@ export default function JobPostings() {
     const [state, dispatch] = useGlobalState();
     const [jobCards, setJobCards] = React.useState([]);
     const [jobPostModal, setJobPostModal] = React.useState(false);
+    const [openNotif, setOpenNotif] = React.useState(false);
+    const [applySuccess, setApplySuccess] = React.useState(false);
+    const [searchResult, setSearchResult] = React.useState(true);
+    const [jobTitle , setJobTite] = React.useState("");
+    const [jobDescription , setJobDescription] = React.useState("");
+    const [jobLocation , setJobLocation] = React.useState("");
+
+    function postJob() {
+        setJobPostModal(false);
+        axios.post(URL + "/v1.0/jobs", {
+            title : jobTitle,
+            description : jobDescription,
+            location : jobLocation,
+            manufacturerId : state.user.id,
+            applicants : []
+        })
+            .then((res) => {
+                setApplySuccess(true);
+                setOpenNotif(true);
+                setTimeout(function () {
+                    setOpenNotif(false);
+                }, 3000);
+            }).
+            catch((e) => {
+                setApplySuccess(false);
+                setOpenNotif(true);
+                setTimeout(function () {
+                    setOpenNotif(false);
+                }, 3000);
+            });
+    }
 
     function handleClose() {
         setJobPostModal(false);
     };
+
+    function changeJobTitle(e)    {
+        console.log(e.target.value);
+        setJobTite(e.target.value);
+    }
+
+    function changeJobDesc(e)    {
+        console.log(e.target.value);
+        setJobDescription(e.target.value);
+    }
+
+    function changeJobLocation(e)    {
+        console.log(e.target.value);
+        setJobLocation(e.target.value);
+    }
+
     var manufacturerList = [];
     useEffect(() => {
         //dispatch({ num: state.num + 1 });
         axios.get(URL + "/v1.0/jobs?manufacturer=" + state.user.id)
             .then((res) => {
                 console.log(res.data);
+                if (res.data.length == 0) setSearchResult(false);
                 manufacturerList = res.data;
                 let jobCardList = [];
                 for (let i = 0; i < manufacturerList.length; i++) {
                     jobCardList.push(<JobCard jobData={manufacturerList[i]} key={i} />);
                 }
                 setJobCards(jobCardList);
+                
             });
-    }, []);
+    }, [applySuccess]);
+
 
     return (
         <div>
             <GridContainer>
                 {jobCards.length != 0 ? jobCards : (
                     <GridItem xs={12} sm={12} md={6}>
-                        Loading...
+                        {searchResult ?  "Loading..." : "No Job Postings" }
                     </GridItem>
                 )}
             </GridContainer>
-            <Fab onClick={() => setJobPostModal(true)} color="secondary" aria-label="add"
+            <Fab onClick={(e) => setJobPostModal(true)} color="secondary" aria-label="add"
                 style={{
                     bottom: "20px",
                     right: "20px",
@@ -113,7 +166,7 @@ export default function JobPostings() {
                 onClose={handleClose}
                 scroll="paper"
             >
-                <DialogTitle id="scroll-dialog-title">Creat Job Posting</DialogTitle>
+                <DialogTitle id="scroll-dialog-title">Create Job Posting</DialogTitle>
                 <DialogContent dividers={true}>
                     <GridContainer>
                         <GridItem xs={12} sm={12} md={12}>
@@ -121,7 +174,8 @@ export default function JobPostings() {
                                 labelText="Job Title"
                                 id="job-title"
                                 inputProps={{
-                                    type: "text"
+                                    type: "text",
+                                    onChange: changeJobTitle
                                 }}
                                 formControlProps={{
                                     fullWidth: true
@@ -134,7 +188,8 @@ export default function JobPostings() {
                                 id="job-desc"
                                 inputProps={{
                                     multiline: true,
-                                    rows : 3
+                                    rows: 3,
+                                    onChange: changeJobDesc
                                 }}
                                 formControlProps={{
                                     fullWidth: true
@@ -146,7 +201,8 @@ export default function JobPostings() {
                                 labelText="Job Location"
                                 id="job-location"
                                 inputProps={{
-                                    type: "text"
+                                    type: "text",
+                                    onChange: changeJobLocation
                                 }}
                                 formControlProps={{
                                     fullWidth: true,
@@ -157,7 +213,7 @@ export default function JobPostings() {
                     </GridContainer>
                 </DialogContent>
                 <DialogActions>
-                    <DialogButton onClick={handleClose} color="info">
+                    <DialogButton onClick={postJob} color="info">
                         Post
                     </DialogButton>
                     <DialogButton onClick={handleClose} color="info">
@@ -165,6 +221,23 @@ export default function JobPostings() {
                     </DialogButton>
                 </DialogActions>
             </Dialog>
+            {applySuccess ? (<Snackbar
+                place="bc"
+                color="success"
+                icon={CheckIcon}
+                message="You have successfully posted the job."
+                open={openNotif}
+                closeNotification={() => setOpenNotif(false)}
+                close
+            />) : (<Snackbar
+                place="bc"
+                color="danger"
+                icon={CancelIcon}
+                message="Failed to post the job. Please try again."
+                open={openNotif}
+                closeNotification={() => setOpenNotif(false)}
+                close
+            />)}
         </div>
     );
 }

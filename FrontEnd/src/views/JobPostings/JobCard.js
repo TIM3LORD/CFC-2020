@@ -21,6 +21,7 @@ import Code from "@material-ui/icons/Code";
 import Cloud from "@material-ui/icons/Cloud";
 // core components
 import GridItem from "components/Grid/GridItem.js";
+import CheckIcon from "@material-ui/icons/CheckCircleOutline";
 import GridContainer from "components/Grid/GridContainer.js";
 import Tasks from "components/Tasks/Tasks.js";
 import CustomTabs from "components/CustomTabs/CustomTabs.js";
@@ -87,8 +88,8 @@ function truncateString(str, num) {
     return str.slice(0, num) + '...'
 }
 
-function createData(name, address, phone, qualification, email, dob) {
-    return { name, address, phone, qualification, email, dob };
+function createData(name, address, phone, qualification, emailAddress, dob) {
+    return { name, address, phone, qualification, emailAddress, dob };
   }
   
   const emptyList = [
@@ -112,12 +113,12 @@ export default function JobCard(props) {
         let a = props.jobData.applicants;
         let n = props.jobData.applicants.length;
         for(let i = 0; i < n; i++)
-            //await axios.get(URL + "/v1.0/users/" + a[i])
-            await axios.get("https://run.mocky.io/v3/86064599-d4d6-413e-b215-6128a8651a37")
+            await axios.get(URL + "/v1.0/users/" + a[i])
+            //await axios.get("https://run.mocky.io/v3/86064599-d4d6-413e-b215-6128a8651a37")
             .then((res) => {
-                console.log(res.data);
-                let d = res.data;
-                applicants.push(createData(d.name, d.address, d.pnumber, d.qualification, d.email, d.dob));
+                console.log(res.data[0]);
+                let d = res.data[0];
+                applicants.push(createData(d.name, d.address, d.pnumber, d.qualification, d.emailAddress, d.dob));
             });
         setApplicantList(applicants.length == 0 ? emptyList : applicants);
         console.log("done");
@@ -142,7 +143,7 @@ export default function JobCard(props) {
                     <p>Location: {props.jobData.location}</p>
                 </CardHeader>
                 <CardBody>
-                    {truncateString(props.jobData.description, 5)}
+                    {truncateString(props.jobData.description, 100)}
                 </CardBody>
                 <CardFooter stats>
                     <div className={classes.stats}>
@@ -161,7 +162,7 @@ export default function JobCard(props) {
                 >
                     <DialogTitle id="scroll-dialog-title">{props.jobData.title}</DialogTitle>
                     <DialogContent dividers={true}>
-                        <h4 style={{ marginTop: '0px' }}>Location: {props.jobData.location}</h4>
+                        <p><b>Location:</b> {props.jobData.location}</p>
                         <p>{props.jobData.description}</p>
                         <h5>Applicants</h5>
                         <Table>
@@ -206,10 +207,9 @@ export default function JobCard(props) {
                             <p><b>Qualification:</b> {selectedApplicant.qualification}</p>
                             <p><b>Address:</b> {selectedApplicant.address}</p>
                             <p><b>Phone Number:</b> {selectedApplicant.phone}</p>
-                            <p><b>Email:</b> {selectedApplicant.email}</p>
+                            <p><b>Email:</b> {selectedApplicant.emailAddress}</p>
                             <p><b>Date of Birth:</b> {selectedApplicant.dob}</p>
-                            <Button color="primary">Screen</Button>
-                            <Button color="primary">Recruit</Button>
+                            <Button color="primary"><CheckIcon />Shortlist</Button>
                         </DialogContent>
                         <DialogActions>
                             <DialogButton onClick={() => { setJobModal(true) }} color="info">
